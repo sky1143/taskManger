@@ -3,10 +3,15 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Task from "@/models/task";
 
 // Update a task by ID
-export async function PATCH(req, { params }) {
+export async function PATCH(req) {
     const updatedData = await req.json();
     await connectToDatabase();
-    const updatedTask = await Task.findByIdAndUpdate(params.id, updatedData, { new: true }).lean();
+
+    // Extract ID from URL
+    const urlParts = req.nextUrl.pathname.split("/");
+    const id = urlParts[urlParts.length - 1];
+
+    const updatedTask = await Task.findByIdAndUpdate(id, updatedData, { new: true }).lean();
     
     return NextResponse.json({
         id: updatedTask._id.toString(),
@@ -20,8 +25,13 @@ export async function PATCH(req, { params }) {
 }
 
 // Delete a task by ID
-export async function DELETE(req, { params }) {
+export async function DELETE(req) {
     await connectToDatabase();
-    await Task.findByIdAndDelete(params.id);
+
+    // Extract ID from URL
+    const urlParts = req.nextUrl.pathname.split("/");
+    const id = urlParts[urlParts.length - 1];
+
+    await Task.findByIdAndDelete(id);
     return NextResponse.json({ message: "Task deleted" });
 }

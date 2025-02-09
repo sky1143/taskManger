@@ -1,12 +1,12 @@
 # Task Management Application
 
-This is a simple Task Management Application built using **Next.js** with **Server Actions** and **MongoDB**. It allows users to **Create, Read, Update, and Delete (CRUD)** tasks efficiently.
+This is a **Task Management Application** built using **Next.js** with **Server Actions** and **MongoDB**. It allows users to **Create, Read, Update, and Delete (CRUD)** tasks efficiently while maintaining a **clean UI with TailwindCSS**.
 
 ## 🚀 Tech Stack
 - **Frontend:** Next.js (Latest version)
 - **Backend:** Next.js Server Actions
 - **Database:** MongoDB (via Mongoose)
-- **UI:** TailwindCSS, ShadCN (Optional)
+- **UI:** TailwindCSS
 - **Deployment:** Vercel
 
 ## 📌 Features
@@ -15,6 +15,7 @@ This is a simple Task Management Application built using **Next.js** with **Serv
 - ✅ Store tasks in MongoDB using Mongoose
 - ✅ Clean UI using TailwindCSS
 - ✅ Fully responsive and optimized for performance
+- ✅ Instant UI updates after task actions (no page reload required)
 
 ## 🛠️ Setup Instructions
 
@@ -32,7 +33,7 @@ npm install
 ### 3️⃣ Configure Environment Variables
 Create a `.env.local` file in the root directory and add your MongoDB connection string:
 ```
-MONGODB_URI=mongodb+srv://your_user:your_password@cluster.mongodb.net/taskDB
+MONGODB_URI=mongodb+srv://your_user:your_password@cluster.mongodb.net/taskManger
 ```
 
 ### 4️⃣ Run the Development Server
@@ -60,6 +61,11 @@ vercel
 ```
 📂 task-manager
  ┣ 📂 app
+ ┃ ┗ 📂 api
+ ┃    ┣ 📂 tasks
+ ┃    ┃  ┗ 📜 route.js       # Handles GET (fetch all) & POST (create)
+ ┃    ┗ 📂 tasks/[id]
+ ┃       ┗ 📜 route.js       # Handles PATCH (update) & DELETE (remove)
  ┃ ┗ 📜 page.js       # Main UI
  ┣ 📂 components
  ┃ ┣ 📜 TaskForm.js   # Task input form
@@ -68,8 +74,8 @@ vercel
  ┃ ┗ 📜 mongodb.js    # Database connection
  ┣ 📂 models
  ┃ ┗ 📜 task.js       # Task schema
- ┣ 📂 actions
- ┃ ┗ 📜 taskActions.js # Server actions (CRUD)
+ ┣ 📂 public
+ ┃ ┗ 📜 favicon.ico   # App icon
  ┣ 📜 .env.local      # MongoDB connection string
  ┣ 📜 next.config.mjs # Next.js configuration
  ┣ 📜 tailwind.config.js # TailwindCSS config
@@ -77,17 +83,56 @@ vercel
  ┗ 📜 README.md       # Documentation
 ```
 
-## 🏆 Evaluation Criteria
-✅ **Working functionality (40%)** – CRUD, task completion  
-✅ **Code quality & organization (30%)** – Modular, reusable components  
-✅ **UI/UX design (20%)** – Clean, accessible design with Tailwind  
-✅ **Documentation (10%)** – README with setup instructions  
+## 🔧 API Endpoints
+
+### 📌 Create a Task
+**Endpoint:** `POST /api/tasks`
+```json
+{
+  "title": "Shopping",
+  "description": "Buy groceries",
+  "dueDate": "2025-12-30T00:00:00.000Z",
+  "completed": false
+}
+```
+
+### 📌 Fetch All Tasks
+**Endpoint:** `GET /api/tasks`
+```json
+[
+  {
+    "id": "67a83ae2af12f8539b24c4b4",
+    "title": "Shopping",
+    "description": "Buy groceries",
+    "dueDate": "2025-12-30T00:00:00.000Z",
+    "completed": false
+  }
+]
+```
+
+### 📌 Update a Task
+**Endpoint:** `PATCH /api/tasks/{id}`
+```json
+{
+  "completed": true
+}
+```
+
+### 📌 Delete a Task
+**Endpoint:** `DELETE /api/tasks/{id}`
+```json
+{
+  "message": "Task deleted successfully"
+}
+```
 
 ## 🚀 Future Enhancements
 - [ ] Improve error handling (`try-catch` in Server Actions)
 - [ ] Add authentication using NextAuth.js
 - [ ] Implement task filtering (e.g., show only completed tasks)
+- [ ] Add due date sorting feature
 
 ---
 
+💡 **Contributions & Feedback**: Feel free to submit pull requests or raise issues! 🎉
 
