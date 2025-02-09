@@ -2,6 +2,7 @@
   "name": "task-manager",
   "version": "0.1.0",
   "private": true,
+  "main": "server.js",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -11,6 +12,7 @@
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.1.4",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "mongoose": "^8.10.0",
     "next": "15.1.6",
     "react": "^19.0.0",
