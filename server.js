@@ -10,14 +10,6 @@ const PORT = process.env.PORT || 3000;
 
 server.use(express.json());
 
-// Serve API route
-server.get("/api/tasks", (req, res) => {
-  res.json([
-    { id: 1, title: "Task 1", completed: false },
-    { id: 2, title: "Task 2", completed: true },
-  ]);
-});
-
 // Serve Next.js frontend
 app.prepare().then(() => {
   server.all("*", (req, res) => {

@@ -17,7 +17,6 @@ This is a **Task Management Application** built using **Next.js** with **Server 
 - ✅ Fully responsive and optimized for performance
 - ✅ Instant UI updates after task actions (no page reload required)
 
-
 ## 🛠️ Setup Instructions
 
 ### 1️⃣ Clone the Repository
@@ -77,11 +76,52 @@ vercel
  ┃ ┗ 📜 task.js       # Task schema
  ┣ 📂 public
  ┃ ┗ 📜 favicon.ico   # App icon
+ ┣ 📂 server.js       # Node.js server file
+ ┣ 📂 vercel.json     # Vercel configuration file
  ┣ 📜 .env.local      # MongoDB connection string
  ┣ 📜 next.config.mjs # Next.js configuration
  ┣ 📜 tailwind.config.js # TailwindCSS config
  ┣ 📜 package.json
  ┗ 📜 README.md       # Documentation
+```
+
+## 🔧 Server Configuration
+
+### 📌 `server.js`
+```javascript
+import express from "express";
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("🚀 Node.js App is running on Vercel!");
+});
+
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
+```
+
+### 📌 `vercel.json`
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
+    }
+  ]
+}
 ```
 
 ## 🔧 API Endpoints
@@ -132,6 +172,9 @@ vercel
 - [ ] Add authentication using NextAuth.js
 - [ ] Implement task filtering (e.g., show only completed tasks)
 - [ ] Add due date sorting feature
+- [ ] Improve deployment efficiency with optimized caching
+- [ ] Implement a dark mode toggle for UI
+- [ ] Add unit tests for API endpoints
 
 ---
 
