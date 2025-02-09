@@ -34,7 +34,7 @@ npm install
 ### 3️⃣ Configure Environment Variables
 Create a `.env.local` file in the root directory and add your MongoDB connection string:
 ```
-MONGODB_URI=mongodb+srv://your_user:your_password@cluster.mongodb.net/taskManger
+MONGODB_URI='mongodb string'
 ```
 
 ### 4️⃣ Run the Development Server
