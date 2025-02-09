@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import Task from "@/models/task";
 
-// ✅ Fetch all tasks from MongoDB
+// ✅ Fetch all tasks
 export async function GET() {
     try {
         await connectToDatabase();
@@ -38,8 +38,6 @@ export async function POST(req) {
         });
 
         const savedTask = await newTask.save();
-        
-        console.log("✅ Task saved to MongoDB:", savedTask);
         return NextResponse.json({
             id: savedTask._id.toString(),
             title: savedTask.title,
@@ -50,52 +48,5 @@ export async function POST(req) {
     } catch (error) {
         console.error("❌ Error creating task:", error);
         return NextResponse.json({ message: "Error creating task" }, { status: 500 });
-    }
-}
-
-// ✅ Update a task by ID
-export async function PATCH(req) {
-    try {
-        const urlParts = req.nextUrl.pathname.split("/");
-        const id = urlParts[urlParts.length - 1];
-        const updatedData = await req.json();
-
-        await connectToDatabase();
-        const updatedTask = await Task.findByIdAndUpdate(id, updatedData, { new: true });
-
-        if (!updatedTask) {
-            return NextResponse.json({ message: "Task not found" }, { status: 404 });
-        }
-
-        return NextResponse.json({
-            id: updatedTask._id.toString(),
-            title: updatedTask.title,
-            description: updatedTask.description,
-            dueDate: updatedTask.dueDate ? updatedTask.dueDate.toISOString() : null,
-            completed: updatedTask.completed,
-        });
-    } catch (error) {
-        console.error("❌ Error updating task:", error);
-        return NextResponse.json({ message: "Error updating task" }, { status: 500 });
-    }
-}
-
-// ✅ Delete a task by ID
-export async function DELETE(req) {
-    try {
-        const urlParts = req.nextUrl.pathname.split("/");
-        const id = urlParts[urlParts.length - 1];
-
-        await connectToDatabase();
-        const deletedTask = await Task.findByIdAndDelete(id);
-
-        if (!deletedTask) {
-            return NextResponse.json({ message: "Task not found" }, { status: 404 });
-        }
-
-        return NextResponse.json({ message: "Task deleted successfully" });
-    } catch (error) {
-        console.error("❌ Error deleting task:", error);
-        return NextResponse.json({ message: "Error deleting task" }, { status: 500 });
     }
 }
