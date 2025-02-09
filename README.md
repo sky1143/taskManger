@@ -17,6 +17,7 @@ This is a **Task Management Application** built using **Next.js** with **Server 
 - ✅ Fully responsive and optimized for performance
 - ✅ Instant UI updates after task actions (no page reload required)
 
+
 ## 🛠️ Setup Instructions
 
 ### 1️⃣ Clone the Repository
