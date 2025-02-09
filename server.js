@@ -6,17 +6,11 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 const server = express();
-const PORT = process.env.PORT || 3000;
-
 server.use(express.json());
 
-// Serve Next.js frontend
-app.prepare().then(() => {
-  server.all("*", (req, res) => {
-    return handle(req, res);
-  });
-
-  server.listen(PORT, () => {
-    console.log(`✅ Server running on http://localhost:${PORT}`);
-  });
+// Let Next.js handle all requests
+server.all("*", (req, res) => {
+  return handle(req, res);
 });
+
+export default server;
